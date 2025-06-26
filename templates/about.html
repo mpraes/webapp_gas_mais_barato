@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Sobre - Gas Mais Barato{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0">
+                    <i class="bi bi-info-circle"></i> Sobre o Projeto
+                </h2>
+            </div>
+            <div class="card-body">
+                <h3>Gas Mais Barato - Dashboard de Preços GLP</h3>
+                
+                <p class="lead">
+                    Uma aplicação web desenvolvida para facilitar a consulta de preços oficiais de GLP (Gás Liquefeito de Petróleo) 
+                    de 13kg em diferentes cidades brasileiras, utilizando dados da ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis).
+                </p>
+                
+                <hr>
+                
+                <h4><i class="bi bi-gear"></i> Tecnologias Utilizadas</h4>
+                <ul>
+                    <li><strong>Backend:</strong> Flask (Python)</li>
+                    <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+                    <li><strong>Framework CSS:</strong> Bootstrap 5</li>
+                    <li><strong>Processamento de Dados:</strong> Pandas</li>
+                    <li><strong>Dados:</strong> CSV oficial da ANP</li>
+                </ul>
+                
+                <h4><i class="bi bi-list-check"></i> Funcionalidades</h4>
+                <ul>
+                    <li>Busca por cidade e estado</li>
+                    <li>Visualização de preços oficiais</li>
+                    <li>Informações das revendedoras</li>
+                    <li>Filtros avançados</li>
+                    <li>Interface responsiva</li>
+                    <li>API REST para integração</li>
+                </ul>
+                
+                <h4><i class="bi bi-database"></i> Fonte dos Dados</h4>
+                <p>
+                    Todos os dados utilizados nesta aplicação são oficiais e fornecidos pela 
+                    <strong>ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis)</strong>, 
+                    órgão responsável pela regulação e fiscalização do setor de combustíveis no Brasil.
+                </p>
+                
+                <h4><i class="bi bi-calendar"></i> Atualização dos Dados</h4>
+                <p>
+                    Os dados são atualizados regularmente conforme disponibilização da ANP. 
+                    O período atual abrange as últimas 4 semanas de coleta de preços.
+                </p>
+                
+                <h4><i class="bi bi-shield-check"></i> Transparência</h4>
+                <p>
+                    Este projeto é desenvolvido com total transparência e utiliza apenas dados públicos 
+                    e oficiais. Não há coleta de dados pessoais dos usuários.
+                </p>
+                
+                <hr>
+                
+                <h4><i class="bi bi-heart"></i> Objetivo</h4>
+                <p>
+                    O objetivo principal é ajudar os brasileiros a encontrar o melhor preço do GLP 
+                    em sua região, promovendo transparência e facilitando o acesso às informações 
+                    oficiais de preços.
+                </p>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-lightbulb"></i>
+                    <strong>Dica:</strong> Use os filtros de busca para encontrar preços específicos 
+                    da sua cidade ou região. Os dados são atualizados regularmente com informações oficiais da ANP.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

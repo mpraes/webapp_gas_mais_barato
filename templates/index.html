@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block title %}Gas Mais Barato - Dashboard de Preços GLP{% endblock %}
+
+{% block content %}
+<!-- Search Filters (agora no topo) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-search"></i> Filtros de Busca
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="searchForm">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="stateSelect" class="form-label">🗺️ Estado</label>
+                            <select class="form-select" id="stateSelect" name="state">
+                                <option value="">Todos os estados</option>
+                                {% for state in states %}
+                                <option value="{{ state }}">{{ state }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="citySelect" class="form-label">🏙️ Cidade</label>
+                            <select class="form-select" id="citySelect" name="city">
+                                <option value="">Todas as cidades</option>
+                                {% for city in cities %}
+                                <option value="{{ city }}">{{ city }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="limitSelect" class="form-label">Limite de Resultados</label>
+                            <select class="form-select" id="limitSelect" name="limit">
+                                <option value="10">10 resultados</option>
+                                <option value="25">25 resultados</option>
+                                <option value="50" selected>50 resultados</option>
+                                <option value="100">100 resultados</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i> Buscar
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="clearFilters">
+                                <i class="bi bi-arrow-clockwise"></i> Limpar Filtros
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Indicadores de Preço e Estatísticas -->
+<div class="row mb-4" id="kpiCards">
+    <div class="col-md-3 col-sm-6 mb-3" id="kpi-avg_price-card">
+        <div class="kpi-card card text-center">
+            <div class="card-body">
+                <div class="kpi-title">Preço Médio</div>
+                <div class="kpi-value" id="kpi-avg_price-value">--</div>
+                <canvas id="kpi-avg_price-sparkline" height="40"></canvas>
+                <div class="kpi-variation" id="kpi-avg_price-variation">--</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3" id="kpi-total_cities-card">
+        <div class="kpi-card card text-center">
+            <div class="card-body">
+                <div class="kpi-title">Cidades</div>
+                <div class="kpi-value" id="kpi-total_cities-value">--</div>
+                <canvas id="kpi-total_cities-sparkline" height="40"></canvas>
+                <div class="kpi-variation" id="kpi-total_cities-variation">--</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3" id="kpi-total_companies-card">
+        <div class="kpi-card card text-center">
+            <div class="card-body">
+                <div class="kpi-title">Empresas</div>
+                <div class="kpi-value" id="kpi-total_companies-value">--</div>
+                <canvas id="kpi-total_companies-sparkline" height="40"></canvas>
+                <div class="kpi-variation" id="kpi-total_companies-variation">--</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3" id="kpi-min_price-card" style="display:none;">
+        <div class="kpi-card card text-center">
+            <div class="card-body">
+                <div class="kpi-title">Preço Mínimo</div>
+                <div class="kpi-value" id="kpi-min_price-value">--</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3" id="kpi-max_price-card" style="display:none;">
+        <div class="kpi-card card text-center">
+            <div class="card-body">
+                <div class="kpi-title">Preço Máximo</div>
+                <div class="kpi-value" id="kpi-max_price-value">--</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="bi bi-list-ul"></i> Resultados
+                </h5>
+                <span class="badge bg-primary" id="resultsCount">0 resultados</span>
+            </div>
+            <div class="card-body">
+                <!-- Loading Spinner -->
+                <div id="loadingSpinner" class="text-center d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p class="mt-2">Carregando resultados...</p>
+                </div>
+                
+                <!-- Results Table -->
+                <div id="resultsTable" class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th class="data-coleta-col">Data Coleta</th>
+                                <th>Empresa</th>
+                                <th>Preço (R$)</th>
+                                <th>Endereço</th>
+                                <th>Bandeira</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <!-- Results will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- No Results Message -->
+                <div id="noResults" class="text-center d-none">
+                    <i class="bi bi-search text-muted fs-1"></i>
+                    <h5 class="text-muted">Nenhum resultado encontrado</h5>
+                    <p class="text-muted">Tente ajustar os filtros de busca</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Data Info -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Informações:</strong> 
+            Dados oficiais da ANP. Período: {{ stats.oldest_date }} a {{ stats.latest_date }}. 
+            Total de registros: {{ stats.total_records }}.
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const resultsBody = document.getElementById('resultsBody');
+    const resultsCount = document.getElementById('resultsCount');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const resultsTable = document.getElementById('resultsTable');
+    const noResults = document.getElementById('noResults');
+    const clearFiltersBtn = document.getElementById('clearFilters');
+
+    // Load initial data
+    loadResults();
+
+    // Form submission
+    searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        loadResults();
+        // Atualiza KPIs também
+        const state = document.getElementById('stateSelect') ? document.getElementById('stateSelect').value : '';
+        const city = document.getElementById('citySelect') ? document.getElementById('citySelect').value : '';
+        if (typeof fetchAndRenderKpis === 'function') {
+            fetchAndRenderKpis({ state, city });
+        }
+    });
+
+    // Clear filters
+    clearFiltersBtn.addEventListener('click', function() {
+        document.getElementById('citySelect').value = '';
+        document.getElementById('stateSelect').value = '';
+        document.getElementById('limitSelect').value = '50';
+        loadResults();
+        // Atualiza KPIs também
+        if (typeof fetchAndRenderKpis === 'function') {
+            fetchAndRenderKpis({});
+        }
+    });
+
+    function loadResults() {
+        // Show loading
+        loadingSpinner.classList.remove('d-none');
+        resultsTable.classList.add('d-none');
+        noResults.classList.add('d-none');
+
+        // Pegue os valores dos selects explicitamente
+        const state = document.getElementById('stateSelect') ? document.getElementById('stateSelect').value : '';
+        const city = document.getElementById('citySelect') ? document.getElementById('citySelect').value : '';
+        const limit = document.getElementById('limitSelect') ? document.getElementById('limitSelect').value : '50';
+
+        // Monte a query string manualmente
+        const params = new URLSearchParams();
+        if (state) params.append('state', state);
+        if (city) params.append('city', city);
+        if (limit) params.append('limit', limit);
+
+        // Make API request
+        fetch(`/api/search?${params.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                loadingSpinner.classList.add('d-none');
+                
+                if (data.success) {
+                    displayResults(data.data);
+                    resultsCount.textContent = `${data.total_results} resultados`;
+                } else {
+                    showError(data.error);
+                }
+            })
+            .catch(error => {
+                loadingSpinner.classList.add('d-none');
+                showError('Erro ao carregar dados: ' + error.message);
+            });
+    }
+
+    function displayResults(results) {
+        if (results.length === 0) {
+            noResults.classList.remove('d-none');
+            resultsTable.classList.add('d-none');
+            resultsCount.textContent = '0 resultados';
+            return;
+        }
+
+        noResults.classList.add('d-none');
+        resultsTable.classList.remove('d-none');
+
+        const tbody = resultsBody;
+        tbody.innerHTML = '';
+
+        results.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${item.municipio}</strong></td>
+                <td><span class="badge bg-secondary">${item.estado}</span></td>
+                <td class="data-coleta-col">${item.data_coleta}</td>
+                <td>${item.revenda}</td>
+                <td><span class="badge bg-success">R$ ${item.preco.toFixed(2)}</span></td>
+                <td><small>${item.endereco}</small></td>
+                <td><span class="badge bg-info">${item.bandeira}</span></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function showError(message) {
+        noResults.classList.remove('d-none');
+        resultsTable.classList.add('d-none');
+        resultsCount.textContent = 'Erro';
+        
+        const noResultsDiv = document.getElementById('noResults');
+        noResultsDiv.innerHTML = `
+            <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
+            <h5 class="text-danger">Erro ao carregar dados</h5>
+            <p class="text-muted">${message}</p>
+        `;
+    }
+});
+</script>
+{% endblock %} 

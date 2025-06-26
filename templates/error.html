@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Erro - Gas Mais Barato{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card text-center">
+            <div class="card-body py-5">
+                <i class="bi bi-exclamation-triangle text-warning" style="font-size: 4rem;"></i>
+                <h2 class="mb-4">Erro na aplicação</h2>
+                <p class="lead text-muted mb-4">
+                    {{ error if error else "Ocorreu um erro inesperado." }}
+                </p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="bi bi-house"></i> Voltar ao Início
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

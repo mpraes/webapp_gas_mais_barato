@@ -1,0 +1,399 @@
+/* Custom styles for Gas Mais Barato Dashboard */
+
+:root {
+    --paynes-gray: #495867ff;
+    --glaucous: #577399ff;
+    --columbia-blue: #bdd5eaff;
+    --ghost-white: #f7f7ffff;
+    --bittersweet: #fe5f55ff;
+}
+
+/* Body and general styles */
+body {
+    background-color: var(--ghost-white);
+    color: var(--paynes-gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navigation */
+.navbar {
+    background: var(--paynes-gray) !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: var(--ghost-white) !important;
+}
+
+.navbar-brand i {
+    margin-right: 0.5rem;
+    color: var(--bittersweet);
+}
+
+.navbar-nav .nav-link {
+    color: var(--ghost-white) !important;
+    transition: color 0.2s;
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .nav-link:hover {
+    color: var(--bittersweet) !important;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out;
+    background: var(--ghost-white);
+    color: var(--paynes-gray);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: var(--glaucous);
+    border-bottom: 1px solid var(--columbia-blue);
+    border-radius: 10px 10px 0 0 !important;
+    color: var(--ghost-white);
+}
+
+/* Statistics cards */
+.card-body i {
+    margin-bottom: 1rem;
+    color: var(--bittersweet);
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--paynes-gray);
+}
+
+/* Título principal do dashboard */
+.card-title.text-white, .dashboard-title {
+    color: var(--paynes-gray) !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Form elements */
+.form-select, .form-control {
+    border-radius: 8px;
+    border: 1px solid var(--columbia-blue);
+    background: var(--ghost-white);
+    color: var(--paynes-gray);
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--glaucous);
+    box-shadow: 0 0 0 0.2rem rgba(87, 115, 153, 0.15);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--glaucous);
+    border-color: var(--glaucous);
+    color: var(--ghost-white);
+}
+
+.btn-primary:hover {
+    background-color: var(--paynes-gray);
+    border-color: var(--paynes-gray);
+    color: var(--ghost-white);
+}
+
+.btn-secondary {
+    background-color: var(--columbia-blue);
+    border-color: var(--columbia-blue);
+    color: var(--paynes-gray);
+}
+
+.btn-secondary:hover {
+    background-color: var(--glaucous);
+    border-color: var(--glaucous);
+    color: var(--ghost-white);
+}
+
+.btn-warning {
+    background-color: var(--bittersweet);
+    border-color: var(--bittersweet);
+    color: var(--ghost-white);
+}
+
+.btn-warning:hover {
+    background-color: var(--glaucous);
+    border-color: var(--glaucous);
+    color: var(--ghost-white);
+}
+
+.btn-warning i {
+    margin-right: 0.5rem;
+}
+
+/* Table styles */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ghost-white);
+    color: var(--paynes-gray);
+}
+
+.table thead th {
+    background-color: var(--glaucous);
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--ghost-white);
+}
+
+.table tbody tr:hover {
+    background-color: var(--columbia-blue);
+    color: var(--paynes-gray);
+}
+
+/* Ajuste largura da coluna de data coleta */
+.table th.data-coleta-col, .table td.data-coleta-col {
+    min-width: 120px;
+    max-width: 140px;
+    width: 140px;
+    white-space: nowrap;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+}
+
+.badge.bg-success {
+    background-color: var(--columbia-blue) !important;
+    color: var(--paynes-gray) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--glaucous) !important;
+    color: var(--ghost-white) !important;
+}
+
+.badge.bg-secondary {
+    background-color: var(--paynes-gray) !important;
+    color: var(--ghost-white) !important;
+}
+
+/* Loading spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    color: var(--glaucous);
+}
+
+/* Alert styles */
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+.alert-info {
+    background-color: var(--columbia-blue);
+    color: var(--paynes-gray);
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, var(--columbia-blue) 0%, var(--bittersweet) 100%);
+    color: var(--paynes-gray);
+    border: 1px solid var(--bittersweet);
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--columbia-blue);
+    background: var(--paynes-gray);
+    color: var(--ghost-white);
+}
+
+footer .alert-warning {
+    background: linear-gradient(135deg, var(--columbia-blue) 0%, var(--bittersweet) 100%);
+    border: 1px solid var(--bittersweet);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--paynes-gray);
+}
+
+footer .alert-warning h6 {
+    color: var(--paynes-gray);
+    font-weight: 600;
+}
+
+footer .alert-warning p {
+    color: var(--paynes-gray);
+    line-height: 1.4;
+}
+
+footer .btn-warning {
+    background-color: var(--bittersweet);
+    border-color: var(--bittersweet);
+    color: var(--ghost-white);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+footer .btn-warning:hover {
+    background-color: var(--glaucous);
+    border-color: var(--glaucous);
+    color: var(--ghost-white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer .btn-warning i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body i {
+        font-size: 2rem !important;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Footer responsive */
+    footer .alert-warning .col-md-4 {
+        margin-top: 1rem;
+    }
+    
+    footer .alert-warning .text-md-end {
+        text-align: center !important;
+    }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Price highlighting */
+.price-high {
+    background-color: var(--columbia-blue) !important;
+    border-color: var(--glaucous) !important;
+}
+
+.price-low {
+    background-color: var(--ghost-white) !important;
+    border-color: var(--columbia-blue) !important;
+}
+
+/* Search form styling */
+#searchForm {
+    background-color: var(--columbia-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    color: var(--paynes-gray);
+}
+
+/* Results count badge */
+#resultsCount {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: var(--glaucous);
+    color: var(--ghost-white);
+}
+
+/* No results styling */
+#noResults {
+    padding: 3rem 1rem;
+}
+
+#noResults i {
+    margin-bottom: 1rem;
+}
+
+/* Error styling */
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Success styling */
+.text-success {
+    color: #198754 !important;
+}
+
+/* Info styling */
+.text-info {
+    color: var(--glaucous) !important;
+}
+
+/* Warning styling */
+.text-warning {
+    color: var(--bittersweet) !important;
+}
+
+.kpi-card {
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(80,80,120,0.07);
+    background: #f7f8fa;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kpi-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4a4a6a;
+    margin-bottom: 0.2rem;
+}
+
+.kpi-value {
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #2a2a3a;
+    margin-bottom: 0.2rem;
+}
+
+.kpi-variation {
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    color: #b48a78 !important;
+}
+
+.kpi-variation .text-danger, .kpi-variation .text-red, .kpi-variation[style*="#dc3545"] {
+    color: #b48a78 !important;
+}
+
+.alert-warning {
+    border-color: #ffe5b4;
+    background-color: #fff8e1;
+    color: #8a6d3b;
+} 
