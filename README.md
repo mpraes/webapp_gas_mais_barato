@@ -4,16 +4,25 @@ Um dashboard web simples desenvolvido em Flask que permite aos usuários consult
 
 ## 📋 Descrição
 
-Este projeto foi desenvolvido para facilitar a consulta de preços de GLP de 13kg em diferentes cidades brasileiras. O dashboard utiliza dados oficiais da ANP e oferece uma interface amigável para que os usuários possam encontrar o melhor preço do gás em sua região.
+Este projeto foi desenvolvido para facilitar a consulta de preços de GLP de 13kg em diferentes cidades brasileiras. O dashboard utiliza dados oficiais da ANP e oferece uma interface amigável, moderna e interativa para que os usuários possam encontrar o melhor preço do gás em sua região.
+
+O frontend conta com animações, atalhos de teclado, notificações toast, exportação de dados, gráficos dinâmicos e outras melhorias de experiência do usuário.
 
 ## ✨ Funcionalidades
 
-- **Busca por Cidade**: Filtro por município para encontrar revendedores locais
+- **Busca por Cidade e Estado**: Filtro por município e UF para encontrar revendedores locais
 - **Consulta de Preços**: Visualização dos preços oficiais de GLP 13kg
 - **Informações das Empresas**: Dados das revendedoras incluindo CNPJ e endereço
 - **Filtros Avançados**: Busca por estado, bandeira da empresa e período
-- **Interface Responsiva**: Design adaptável para diferentes dispositivos
+- **Interface Responsiva e Animada**: Design adaptável, com animações de fade-in nos cards e tooltips informativos
+- **Atalhos de Teclado**: Pesquise rapidamente (Ctrl/Cmd+K) ou limpe filtros (Esc)
+- **Notificações Toast**: Feedback visual para ações do usuário
+- **Exportação para CSV**: Exporte os resultados da busca facilmente
+- **KPIs Dinâmicos**: Indicadores de preço médio, mínimo, máximo, total de cidades e empresas, com gráficos sparkline
+- **Copiar para Área de Transferência**: Copie informações rapidamente
+- **Reportar Preço**: Botão para enviar e-mail reportando preços diferentes, com confirmação
 - **API REST**: Endpoints para integração com outros sistemas
+- **Filtros Persistentes**: Filtros de busca salvos automaticamente no navegador
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -94,10 +103,14 @@ webapp_gas_mais_barato/
 ## 🚀 Como Usar
 
 1. **Acesse o Dashboard**: Abra a aplicação no seu navegador
-2. **Selecione sua Cidade**: Use o filtro de busca para encontrar sua cidade natal
+2. **Selecione Estado e Cidade**: Use os filtros para refinar sua busca
 3. **Visualize os Preços**: Veja os preços de GLP 13kg das diferentes revendedoras
 4. **Compare Opções**: Analise preços, bandeiras e localizações das empresas
-5. **Filtros Adicionais**: Use filtros por estado, empresa ou período para refinar sua busca
+5. **Use Atalhos**: Ctrl/Cmd+K para focar na busca, Esc para limpar filtros
+6. **Exporte Dados**: Clique em "Exportar CSV" para baixar os resultados
+7. **Copie Informações**: Use o botão de copiar para transferir dados para a área de transferência
+8. **Reportar Preço**: Clique no botão de e-mail para reportar preços diferentes (notificação será exibida)
+9. **Filtros Salvos**: Seus filtros são salvos automaticamente e restaurados ao recarregar a página
 
 ## 🔧 Scripts Disponíveis
 
@@ -119,6 +132,18 @@ A aplicação Flask oferece:
 - **API REST**: Endpoints para busca de dados
 - **Templates**: Interface responsiva com Bootstrap
 - **Tratamento de erros**: Páginas de erro personalizadas
+
+### Frontend JavaScript (`static/js/main.js`)
+
+O arquivo `main.js` implementa:
+- Animações e tooltips
+- Atalhos de teclado
+- Notificações toast
+- Exportação de resultados para CSV
+- KPIs dinâmicos e gráficos sparkline
+- Persistência de filtros no navegador
+- Função de copiar para área de transferência
+- Botão de reportar preço via e-mail
 
 ### Script de Testes (`test_data_processor.py`)
 
