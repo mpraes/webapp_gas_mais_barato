@@ -2,6 +2,8 @@
 
 Um dashboard web simples desenvolvido em Flask que permite aos usuários consultar preços oficiais de GLP (Gás Liquefeito de Petróleo) de 13kg por cidade, utilizando dados da ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis).
 
+Esse dash está na web como webapp-gas-mais-barato.onrender.com
+
 ## 📋 Descrição
 
 Este projeto foi desenvolvido para facilitar a consulta de preços de GLP de 13kg em diferentes cidades brasileiras. O dashboard utiliza dados oficiais da ANP e oferece uma interface amigável, moderna e interativa para que os usuários possam encontrar o melhor preço do gás em sua região.
