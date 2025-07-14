@@ -2,6 +2,8 @@
 
 Um dashboard web simples desenvolvido em Flask que permite aos usuários consultar preços oficiais de GLP (Gás Liquefeito de Petróleo) de 13kg por cidade, utilizando dados da ANP (Agência Nacional do Petróleo, Gás Natural e Biocombustíveis).
 
+Esse dash está na web como webapp-gas-mais-barato.onrender.com
+
 ## 📋 Descrição
 
 Este projeto foi desenvolvido para facilitar a consulta de preços de GLP de 13kg em diferentes cidades brasileiras. O dashboard utiliza dados oficiais da ANP e oferece uma interface amigável, moderna e interativa para que os usuários possam encontrar o melhor preço do gás em sua região.
@@ -23,6 +25,7 @@ O frontend conta com animações, atalhos de teclado, notificações toast, expo
 - **Reportar Preço**: Botão para enviar e-mail reportando preços diferentes, com confirmação
 - **API REST**: Endpoints para integração com outros sistemas
 - **Filtros Persistentes**: Filtros de busca salvos automaticamente no navegador
+- **Ordenação de Colunas**: Agora é possível ordenar os resultados da tabela por qualquer coluna (Cidade, Estado, Data Coleta, Empresa, Preço, Endereço, Bandeira) clicando no cabeçalho correspondente.
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -106,11 +109,12 @@ webapp_gas_mais_barato/
 2. **Selecione Estado e Cidade**: Use os filtros para refinar sua busca
 3. **Visualize os Preços**: Veja os preços de GLP 13kg das diferentes revendedoras
 4. **Compare Opções**: Analise preços, bandeiras e localizações das empresas
-5. **Use Atalhos**: Ctrl/Cmd+K para focar na busca, Esc para limpar filtros
-6. **Exporte Dados**: Clique em "Exportar CSV" para baixar os resultados
-7. **Copie Informações**: Use o botão de copiar para transferir dados para a área de transferência
-8. **Reportar Preço**: Clique no botão de e-mail para reportar preços diferentes (notificação será exibida)
-9. **Filtros Salvos**: Seus filtros são salvos automaticamente e restaurados ao recarregar a página
+5. **Ordene os Resultados**: Clique no cabeçalho de qualquer coluna da tabela de resultados (Cidade, Estado, Data Coleta, Empresa, Preço, Endereço, Bandeira) para ordenar os dados de forma crescente ou decrescente.
+6. **Use Atalhos**: Ctrl/Cmd+K para focar na busca, Esc para limpar filtros
+7. **Exporte Dados**: Clique em "Exportar CSV" para baixar os resultados
+8. **Copie Informações**: Use o botão de copiar para transferir dados para a área de transferência
+9. **Reportar Preço**: Clique no botão de e-mail para reportar preços diferentes (notificação será exibida)
+10. **Filtros Salvos**: Seus filtros são salvos automaticamente e restaurados ao recarregar a página
 
 ## 🔧 Scripts Disponíveis
 
@@ -144,6 +148,7 @@ O arquivo `main.js` implementa:
 - Persistência de filtros no navegador
 - Função de copiar para área de transferência
 - Botão de reportar preço via e-mail
+- **Ordenação dinâmica das colunas da tabela de resultados**
 
 ### Script de Testes (`test_data_processor.py`)
 
@@ -202,9 +207,6 @@ curl "http://localhost:5000/api/search?city=São Paulo&limit=10"
 
 # Obter estatísticas
 curl "http://localhost:5000/api/stats"
-
-# Listar cidades
-curl "http://localhost:5000/api/cities"
 ```
 
 ## 📈 Funcionalidades Futuras

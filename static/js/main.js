@@ -5,6 +5,8 @@
 // Global variables
 let currentFilters = {};
 let searchTimeout = null;
+let currentData = []; // Armazena os dados atuais da tabela
+let currentSort = { column: null, direction: 'asc' }; // Armazena o estado da ordenação
 
 // Variável global para armazenar instâncias de Chart.js por KPI
 window.kpiCharts = window.kpiCharts || {};
@@ -27,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize report price functionality
     initializeReportPrice();
+
+    // Initialize table sorting
+    initializeTableSorting();
 
     // Handler do botão Buscar
     const searchBtn = document.getElementById('searchBtn') || document.querySelector('button[type="submit"]');
@@ -527,6 +532,9 @@ function loadResults(filters = {}) {
 }
 
 function renderResultsTable(data) {
+    // Armazena os dados atuais
+    currentData = data || [];
+    
     const tableDiv = document.getElementById('resultsTable');
     if (!tableDiv) return;
 
@@ -535,36 +543,144 @@ function renderResultsTable(data) {
         return;
     }
 
+    // Aplica ordenação se houver
+    let sortedData = [...data];
+    if (currentSort.column) {
+        sortedData = sortData(data, currentSort.column, currentSort.direction);
+    }
+
     let html = `
-        <table class="table table-responsive">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <th>CIDADE</th>
-                    <th>ESTADO</th>
-                    <th>DATA COLETA</th>
-                    <th>EMPRESA</th>
-                    <th>PREÇO (R$)</th>
-                    <th>ENDEREÇO</th>
-                    <th>BANDEIRA</th>
+                    <th class="sortable" data-sort="municipio">
+                        <span>Cidade</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable" data-sort="estado">
+                        <span>Estado</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable data-coleta-col" data-sort="data_coleta">
+                        <span>Data Coleta</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable" data-sort="revenda">
+                        <span>Empresa</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable" data-sort="preco">
+                        <span>Preço (R$)</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable" data-sort="endereco">
+                        <span>Endereço</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
+                    <th class="sortable" data-sort="bandeira">
+                        <span>Bandeira</span>
+                        <i class="bi bi-arrow-down-up sort-icon"></i>
+                    </th>
                 </tr>
             </thead>
             <tbody>
     `;
-    data.forEach(item => {
+    
+    sortedData.forEach(item => {
         html += `
             <tr>
-                <td><b>${item.municipio}</b></td>
+                <td><strong>${item.municipio}</strong></td>
                 <td><span class="badge bg-secondary">${item.estado}</span></td>
-                <td>${item.data_coleta}</td>
+                <td class="data-coleta-col">${item.data_coleta}</td>
                 <td>${item.revenda}</td>
-                <td><span class="badge bg-light text-dark">R$ ${item.preco.toFixed(2)}</span></td>
-                <td>${item.endereco}</td>
+                <td><span class="badge bg-success">R$ ${item.preco.toFixed(2)}</span></td>
+                <td><small>${item.endereco}</small></td>
                 <td><span class="badge bg-info">${item.bandeira}</span></td>
             </tr>
         `;
     });
+    
     html += '</tbody></table>';
     tableDiv.innerHTML = html;
+    
+    // Reaplica os event listeners de ordenação
+    initializeTableSorting();
+}
+
+/**
+ * Initialize table sorting functionality
+ */
+function initializeTableSorting() {
+    const sortableHeaders = document.querySelectorAll('th.sortable');
+    
+    sortableHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            const column = this.getAttribute('data-sort');
+            handleSort(column);
+        });
+    });
+}
+
+/**
+ * Handle sorting when header is clicked
+ */
+function handleSort(column) {
+    // Remove previous sort indicators
+    document.querySelectorAll('th.sortable').forEach(th => {
+        th.classList.remove('sort-asc', 'sort-desc');
+    });
+    
+    // Determine sort direction
+    let direction = 'asc';
+    if (currentSort.column === column && currentSort.direction === 'asc') {
+        direction = 'desc';
+    }
+    
+    // Update current sort state
+    currentSort.column = column;
+    currentSort.direction = direction;
+    
+    // Add sort indicator to clicked header
+    const clickedHeader = document.querySelector(`th[data-sort="${column}"]`);
+    if (clickedHeader) {
+        clickedHeader.classList.add(`sort-${direction}`);
+    }
+    
+    // Re-render table with sorted data
+    renderResultsTable(currentData);
+}
+
+/**
+ * Sort data by column and direction
+ */
+function sortData(data, column, direction) {
+    return [...data].sort((a, b) => {
+        let aVal = a[column];
+        let bVal = b[column];
+        
+        // Handle different data types
+        if (column === 'preco') {
+            aVal = parseFloat(aVal);
+            bVal = parseFloat(bVal);
+        } else if (column === 'data_coleta') {
+            // Convert date string to Date object for comparison
+            aVal = new Date(aVal.split('/').reverse().join('-'));
+            bVal = new Date(bVal.split('/').reverse().join('-'));
+        } else {
+            // String comparison
+            aVal = String(aVal).toLowerCase();
+            bVal = String(bVal).toLowerCase();
+        }
+        
+        // Compare values
+        if (aVal < bVal) {
+            return direction === 'asc' ? -1 : 1;
+        }
+        if (aVal > bVal) {
+            return direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+    });
 }
 
 // Exemplo de uso inicial

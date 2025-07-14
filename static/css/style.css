@@ -158,6 +158,42 @@ body {
     color: var(--ghost-white);
 }
 
+/* Sortable table headers */
+.table thead th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+.table thead th.sortable:hover {
+    background-color: var(--paynes-gray);
+}
+
+.table thead th.sortable .sort-icon {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.table thead th.sortable:hover .sort-icon {
+    opacity: 1;
+}
+
+.table thead th.sortable.sort-asc .sort-icon::before {
+    content: "\F12C"; /* bi-arrow-up */
+}
+
+.table thead th.sortable.sort-desc .sort-icon::before {
+    content: "\F12F"; /* bi-arrow-down */
+}
+
+.table thead th.sortable.sort-asc,
+.table thead th.sortable.sort-desc {
+    background-color: var(--paynes-gray);
+}
+
 .table tbody tr:hover {
     background-color: var(--columbia-blue);
     color: var(--paynes-gray);
